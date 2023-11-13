@@ -7,9 +7,11 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = [
             "id",
+            "ok_to_display",
             "date_entered",
             "commenter_name",
             "comment_text",
             "parent_comment",
-            "replies",
+            "replies"
         ]
+
