@@ -1,12 +1,7 @@
-from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .models import Profile, Schedule, Row
 from .serializers import ScheduleSerializer, RowSerializer, ProfileSerializer
-
-
-def HIIT_Timer(request):
-    return render(request, "HIIT_Timer/HIIT_Timer.html")
 
 class ProfileViewSet(ModelViewSet):
     queryset = Profile.objects.all()

@@ -1,5 +1,5 @@
-from rest_framework.viewsets import ModelViewSet
 from django.db.models import Prefetch
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Comment
 from .serializers import CommentSerializer
@@ -11,6 +11,6 @@ class CommentsViewSet(ModelViewSet):
     ok_replies_queryset = Comment.objects.filter(ok_to_display=True)
     queryset = (
         Comment.objects.filter(ok_to_display=True)
-        .prefetch_related(Prefetch('replies', queryset=ok_replies_queryset))
+        .prefetch_related(Prefetch("replies", queryset=ok_replies_queryset))
         .select_related("parent_comment")
     )
