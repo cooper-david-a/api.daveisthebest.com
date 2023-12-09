@@ -6,13 +6,13 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
-mysqlclient = "*"
 djoser = "*"
 django-filter = "*"
 django-cors-headers = "*"
+mysqlclient = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"

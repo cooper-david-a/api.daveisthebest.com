@@ -19,6 +19,7 @@ class RowSerializer(serializers.ModelSerializer):
 
 class ScheduleSerializer(serializers.ModelSerializer):
     rows = RowSerializer(many=True)
+    profile = serializers.StringRelatedField()
 
     def create(self, validated_data):
         with transaction.atomic():
@@ -41,4 +42,11 @@ class ScheduleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Schedule
-        fields = ["id", "profile", "title", "warmup", "cooldown", "rows"]
+        fields = [
+            "id",
+            "profile",
+            "title",
+            "warmup",
+            "cooldown",
+            "rows",
+        ]

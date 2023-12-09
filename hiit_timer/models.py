@@ -13,11 +13,14 @@ class Profile(models.Model):
 
 class Schedule(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name="schedules"
+        Profile, on_delete=models.CASCADE, related_name="schedules", null=True, blank=True
     )
     title = models.CharField(max_length=255)
     warmup = models.PositiveSmallIntegerField()
     cooldown = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.title
 
 
 class Row(models.Model):

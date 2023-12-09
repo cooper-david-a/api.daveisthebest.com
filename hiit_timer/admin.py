@@ -17,7 +17,7 @@ class RowInline(admin.TabularInline):
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ["id", "profile"]
+    list_display = ["id", "profile", "title"]
     list_per_page = 10
     inlines = [RowInline]
 

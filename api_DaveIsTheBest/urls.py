@@ -21,6 +21,6 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("comments/", include("comments.urls")),
-    path("hiit_timer/", include("hiit_timer.urls")),
+    path("hiit-timer/", include("hiit_timer.urls")),
     path("__debug__/", include("debug_toolbar.urls"))
 ]
