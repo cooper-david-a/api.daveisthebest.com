@@ -1,25 +1,32 @@
 from django.db import transaction
 from rest_framework import serializers
-from .models import Profile, Schedule, Row
+from .models import ScheduleCreator, Schedule, Row
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ScheduleCreatorSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
 
     class Meta:
-        model = Profile
+        model = ScheduleCreator
         fields = ["id", "user_id"]
 
 
 class RowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Row
-        fields = ["id", "hard", "easy", "rounds"]
+        fields = [
+            "id",
+            "hard_description",
+            "hard",
+            "easy_description",
+            "easy",
+            "rounds",
+        ]
 
 
 class ScheduleSerializer(serializers.ModelSerializer):
     rows = RowSerializer(many=True)
-    profile = serializers.StringRelatedField()
+    schedule_creator = serializers.StringRelatedField()
 
     def create(self, validated_data):
         with transaction.atomic():
@@ -31,7 +38,9 @@ class ScheduleSerializer(serializers.ModelSerializer):
                     Row(
                         schedule=schedule,
                         hard=row["hard"],
+                        hard_description=row["hard_description"],
                         easy=row["easy"],
+                        easy_description=row["easy_description"],
                         rounds=row["rounds"],
                     )
                     for row in rows
@@ -44,9 +53,11 @@ class ScheduleSerializer(serializers.ModelSerializer):
         model = Schedule
         fields = [
             "id",
-            "profile",
+            "schedule_creator",
             "title",
+            "warmup_description",
             "warmup",
+            "cooldown_description",
             "cooldown",
             "rows",
         ]

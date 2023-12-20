@@ -2,9 +2,9 @@ from django.db import models
 from django.conf import settings
 
 
-class Profile(models.Model):
+class ScheduleCreator(models.Model):
     user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="HIIT_creator"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="schedule_creator"
     )
 
     def __str__(self):
@@ -12,12 +12,18 @@ class Profile(models.Model):
 
 
 class Schedule(models.Model):
-    profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name="schedules", null=True, blank=True
+    schedule_creator = models.ForeignKey(
+        ScheduleCreator,
+        on_delete=models.CASCADE,
+        related_name="schedules",
+        null=True,
+        blank=True,
     )
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=100)
     warmup = models.PositiveSmallIntegerField()
+    warmup_description = models.CharField(max_length=100)
     cooldown = models.PositiveSmallIntegerField()
+    cooldown_description = models.CharField(max_length=100)
 
     def __str__(self):
         return self.title
@@ -28,5 +34,7 @@ class Row(models.Model):
         Schedule, on_delete=models.CASCADE, related_name="rows"
     )
     hard = models.PositiveSmallIntegerField()
+    hard_description = models.CharField(max_length=100)
     easy = models.PositiveSmallIntegerField()
+    easy_description = models.CharField(max_length=100)
     rounds = models.PositiveSmallIntegerField()

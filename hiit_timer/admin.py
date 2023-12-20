@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Schedule, Profile, Row
+from .models import Schedule, ScheduleCreator, Row
 
 # Register your models here.
 
 
-@admin.register(Profile)
+@admin.register(ScheduleCreator)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ["user"]
     list_per_page = 10
@@ -17,7 +17,7 @@ class RowInline(admin.TabularInline):
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ["id", "profile", "title"]
+    list_display = ["id", "schedule_creator", "title"]
     list_per_page = 10
     inlines = [RowInline]
 

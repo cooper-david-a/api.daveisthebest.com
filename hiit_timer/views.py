@@ -1,10 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
-from .models import Profile, Schedule, Row
-from .serializers import ScheduleSerializer, RowSerializer, ProfileSerializer
+from .models import ScheduleCreator, Schedule, Row
+from .serializers import ScheduleSerializer, RowSerializer, ScheduleCreatorSerializer
 
-class ProfileViewSet(ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+class ScheduleCreatorViewSet(ModelViewSet):
+    queryset = ScheduleCreator.objects.all()
+    serializer_class = ScheduleCreatorSerializer
 
 class ScheduleViewSet(ModelViewSet):
     http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
