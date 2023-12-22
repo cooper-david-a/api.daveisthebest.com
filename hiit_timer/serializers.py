@@ -15,7 +15,6 @@ class RowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Row
         fields = [
-            "id",
             "hard_description",
             "hard",
             "easy_description",
@@ -31,7 +30,13 @@ class ScheduleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         with transaction.atomic():
             rows = validated_data.pop("rows")
-            schedule = Schedule.objects.create(**validated_data)
+            user_id = self.context["request"].user.id
+            (schedule_creator, created) = ScheduleCreator.objects.get_or_create(
+                user_id=user_id
+            )
+            schedule = Schedule.objects.create(
+                schedule_creator=schedule_creator, **validated_data
+            )
 
             Row.objects.bulk_create(
                 [
@@ -48,6 +53,38 @@ class ScheduleSerializer(serializers.ModelSerializer):
             )
 
             return schedule
+
+    def update(self, instance, validated_data):
+        with transaction.atomic():
+            new_rows_data = validated_data.pop("rows")
+            old_rows = instance.rows.all()
+
+            for i in range(len(old_rows)):
+                if i < len(new_rows_data):
+                    old_rows[i].hard = new_rows_data[i].get("hard", old_rows[i].hard)
+                    old_rows[i].hard_description = new_rows_data[i].get(
+                        "hard_description", old_rows[i].hard_description
+                    )
+                    old_rows[i].easy = new_rows_data[i].get("easy", old_rows[i].hard)
+                    old_rows[i].easy_description = new_rows_data[i].get(
+                        "easy_description", old_rows[i].easy_description
+                    )
+                    old_rows[i].rounds = new_rows_data[i].get("rounds", old_rows[i].rounds)
+                    old_rows[i].save()
+                else:
+                    old_rows[i].delete()
+
+            for i in range(len(old_rows),len(new_rows_data)):
+                Row.objects.create(
+                        schedule=instance,
+                        hard=new_rows_data[i].get("hard"),
+                        hard_description=new_rows_data[i].get("hard_description"),
+                        easy=new_rows_data[i].get("easy"),
+                        easy_description=new_rows_data[i].get("easy_description"),
+                        rounds=new_rows_data[i].get("rounds"),
+                )
+
+            return super().update(instance, validated_data)
 
     class Meta:
         model = Schedule

@@ -15,9 +15,7 @@ class Schedule(models.Model):
     schedule_creator = models.ForeignKey(
         ScheduleCreator,
         on_delete=models.CASCADE,
-        related_name="schedules",
-        null=True,
-        blank=True,
+        related_name="schedules"
     )
     title = models.CharField(max_length=100)
     warmup = models.PositiveSmallIntegerField()
