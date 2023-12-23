@@ -176,6 +176,7 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
+    "TOKEN_OBTAIN_SERIALIZER": "base_app.serializers.TokenObtainPairSerializer",
 }
 
 DJOSER = {

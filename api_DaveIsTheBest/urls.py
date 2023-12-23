@@ -23,6 +23,6 @@ urlpatterns = [
     path("comments/", include("comments.urls")),
     path("hiit-timer/", include("hiit_timer.urls")),
     path("auth/", include("djoser.urls")),
-    path("auth/", include("djoser.urls.jwt")),
+    path("auth/", include("base_app.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
