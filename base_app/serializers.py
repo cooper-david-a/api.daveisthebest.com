@@ -19,7 +19,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
 
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
-        pass
+        fields = ["id", "username", "email", "first_name", "last_name"]
 
 
 class TokenObtainPairSerializer(BaseTokenObtainPairSerializer):
