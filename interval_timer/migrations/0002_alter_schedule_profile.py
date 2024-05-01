@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hiit_timer', '0001_initial'),
+        ('interval_timer', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='schedule',
             name='profile',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='hiit_timer.profile'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='interval_timer.profile'),
         ),
     ]

@@ -15,3 +15,11 @@ class CommentSerializer(serializers.ModelSerializer):
             "replies"
         ]
 
+class PostCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            "comment_text",
+            "parent_comment",
+        ]
+

@@ -7,14 +7,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hiit_timer', '0004_remove_schedule_profile_schedulecreator_and_more'),
+        ('interval_timer', '0004_remove_schedule_profile_schedulecreator_and_more'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='schedule',
             name='schedule_creator',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='hiit_timer.schedulecreator'),
+            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='interval_timer.schedulecreator'),
             preserve_default=False,
         ),
     ]

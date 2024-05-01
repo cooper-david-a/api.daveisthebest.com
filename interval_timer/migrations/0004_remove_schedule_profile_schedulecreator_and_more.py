@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hiit_timer', '0003_row_easy_description_row_hard_description_and_more'),
+        ('interval_timer', '0003_row_easy_description_row_hard_description_and_more'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='schedule',
             name='schedule_creator',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='hiit_timer.schedulecreator'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='schedules', to='interval_timer.schedulecreator'),
         ),
         migrations.DeleteModel(
             name='Profile',

@@ -3,12 +3,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny
 
 from .models import Comment
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, PostCommentSerializer
 
 
 class CommentsViewSet(ModelViewSet):
     http_method_names = ["get", "post", "patch", "delete", "head", "options"]
-    serializer_class = CommentSerializer
     ok_replies_queryset = Comment.objects.filter(ok_to_display=True)
     permission_classes = [AllowAny]
     queryset = (
@@ -16,3 +15,8 @@ class CommentsViewSet(ModelViewSet):
         .prefetch_related(Prefetch("replies", queryset=ok_replies_queryset))
         .select_related("parent_comment")
     )
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return PostCommentSerializer
+        return CommentSerializer

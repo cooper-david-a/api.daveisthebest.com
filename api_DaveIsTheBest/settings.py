@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from datetime import timedelta
 from pathlib import Path
 from configparser import RawConfigParser
 
@@ -30,6 +29,7 @@ SECRET_KEY = parser.get("secrets", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = parser.getboolean("debug", "DEBUG")
+PRODUCTION = parser.getboolean("production","PRODUCTION")
 
 ALLOWED_HOSTS = parser.get("hosts", "ALLOWED_HOSTS").split(",")
 
@@ -53,17 +53,15 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "djoser",
-    "debug_toolbar",
     "base_app",
     "comments",
-    "hiit_timer",
+    "interval_timer",
     "live_chat_webRTC",
     "file_sharing",
 ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -145,11 +143,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+if PRODUCTION:
+    STATIC_URL = parser.get("STATIC","STATIC_URL")
+    MEDIA_URL = parser.get("MEDIA", "MEDIA_URL")
+    MEDIA_ROOT = parser.get("MEDIA", "MEDIA_ROOT")
+else:
+    STATIC_URL = "static/"
+    MEDIA_URL = "media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+STATIC_ROOT = BASE_DIR / "static"
 
 EMAIL_BACKEND = parser.get("email", "EMAIL_BACKEND")
 DEFAULT_FROM_EMAIL = parser.get("email", "DEFAULT_FROM_EMAIL")
@@ -187,8 +190,13 @@ DJOSER = {
 }
 
 CORS_ALLOWED_ORIGINS = parser.get("CORS", "CORS_ALLOWED_ORIGINS").split(",")
+CSRF_TRUSTED_ORIGINS = parser.get("CSRF", "CSRF_TRUSTED_ORIGINS").split(",")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+if not PRODUCTION:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")

@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="schedules",
-                        to="hiit_timer.profile",
+                        to="interval_timer.profile",
                     ),
                 ),
             ],
@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="rows",
-                        to="hiit_timer.schedule",
+                        to="interval_timer.schedule",
                     ),
                 ),
             ],

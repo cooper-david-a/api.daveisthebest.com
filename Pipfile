@@ -12,6 +12,7 @@ django-cors-headers = "*"
 mysqlclient = "*"
 djangorestframework-camel-case = "*"
 djangorestframework-simplejwt = "*"
+gunicorn = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
