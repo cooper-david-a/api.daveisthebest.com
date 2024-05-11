@@ -181,12 +181,17 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
 }
 
+DOMAIN = parser.get("DJOSER","DOMAIN") #ONLY NEEDED FOR DJOSER CONFIRMATION EMAIL
+
 DJOSER = {
     "SERIALIZERS": {
         "user_create": "base_app.serializers.UserCreateSerializer",
         "current_user": "base_app.serializers.UserSerializer",
         "user": "base_app.serializers.UserSerializer",
-    }
+    },
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": parser.get("DJOSER", "ACTIVATION_URL"),
+    'PASSWORD_RESET_CONFIRM_URL': parser.get("DJOSER", "PASSWORD_RESET_CONFIRM_URL"),
 }
 
 CORS_ALLOWED_ORIGINS = parser.get("CORS", "CORS_ALLOWED_ORIGINS").split(",")
