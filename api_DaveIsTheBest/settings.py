@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "interval_timer",
     "live_chat_webRTC",
     "file_sharing",
+    "davestech_contacts",
 ]
 
 MIDDLEWARE = [

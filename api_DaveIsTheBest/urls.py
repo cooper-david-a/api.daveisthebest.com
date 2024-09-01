@@ -26,6 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("comments/", include("comments.urls")),
     path("interval-timer/", include("interval_timer.urls")),
+    path("davestech_contacts/", include("davestech_contacts.urls")),
     path("auth/", include("djoser.urls")),
     path("auth/", include("base_app.urls")),
 ]
