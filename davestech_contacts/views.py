@@ -16,7 +16,7 @@ class ContactViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         try:
-            email_from = 'dave@davestechnicalservices.com'
+            email_from = 'noreply@davestechnicalservices.com'
             email_to = [request.data['email'], 'dave@davestechnicalservices.com']
             subject = 'Contact from davestechnicalservices.com'
             message = request.data['message']
