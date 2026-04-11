@@ -13,6 +13,7 @@ mysqlclient = "*"
 djangorestframework-camel-case = "*"
 djangorestframework-simplejwt = "*"
 gunicorn = "*"
+pillow = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

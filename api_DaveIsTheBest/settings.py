@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "live_chat_webRTC",
     "file_sharing",
     "davestech_contacts",
+    "coinflipper",
 ]
 
 MIDDLEWARE = [
