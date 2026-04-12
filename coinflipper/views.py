@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .serializers import CoinFlipSerializer
 from .models import CoinFlip
 
@@ -13,6 +14,8 @@ from .models import CoinFlip
 class CoinFlipperViewSet(ModelViewSet):
     queryset = CoinFlip.objects.all()
     serializer_class = CoinFlipSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
 
     @action(detail=True, methods=['post'])
     def image(self, request, pk=None):
@@ -22,6 +25,8 @@ class CoinFlipperViewSet(ModelViewSet):
         return Response({'status': 'image saved'}, status=200)
 
 class CoinFlipperBulkView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         serializer = CoinFlipSerializer(data=request.data, many=True)
         if serializer.is_valid():
