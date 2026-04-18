@@ -3,13 +3,18 @@ from django.utils import timezone
 
 # Create your models here.
 
+def _flip_image_path(instance, filename):
+    ext = filename.rsplit(".", 1)[-1]
+    return f"coinflipper/{instance.id}.{ext}"
+
+
 class CoinFlip(models.Model):
     result_choices = [("H", "Heads"),("T", "Tails"),("U", "Unknown")]
 
     recorded_at = models.DateTimeField(auto_now_add=True)
     flipped_at = models.DateTimeField(default=timezone.now)
     result = models.CharField(choices=result_choices, max_length=1, default="U")
-    image = models.ImageField(upload_to='coinflipper/', blank=True, null=True)
+    image = models.ImageField(upload_to=_flip_image_path, blank=True, null=True)
 
 class CoinFlipStats(models.Model):
     total = models.IntegerField(default=0)
