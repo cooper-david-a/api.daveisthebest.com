@@ -14,7 +14,7 @@ from .filters import CoinFlipFilter
 
 class CoinFlipperViewSet(ModelViewSet):
     """
-    Coin flip results captured by the automated flipping machine.
+    Coin flip results captured by the Goodthink Labs coin flipper.
 
     Each record contains the flip result (H/T/(U)nknown) and an optional image.
     Use /stats/ for aggregate statistics and /bulk/ for batch creation.
@@ -82,7 +82,8 @@ class CoinFlipperViewSet(ModelViewSet):
     
     @action(detail=False, methods=['get'])
     def results(self, request):
-        results = CoinFlip.objects.values_list('result', flat=True)
+        queryset = self.filter_queryset(self.get_queryset())
+        results = queryset.values_list('result', flat=True)
         return Response(list(results))
 
 class CoinFlipperBulkView(APIView):
