@@ -34,8 +34,13 @@ class CoinFlipperViewSet(ModelViewSet):
     ordering_fields = ['id','flipped_at','recorded_at']
     ordering = ['-id']
 
+
     def perform_create(self, serializer):
-        instance = serializer.save()
+        image = self.request.FILES.get('image')
+        instance = serializer.save(image=None)
+        if image:
+            instance.image = image
+            instance.save(update_fields=['image'])
         self._update_stats(instance.result)
 
     def _update_stats(self, result):

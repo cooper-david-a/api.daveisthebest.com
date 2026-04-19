@@ -4,8 +4,8 @@ from django.utils import timezone
 # Create your models here.
 
 def _flip_image_path(instance, filename):
-    ext = filename.rsplit(".", 1)[-1]
-    return f"coinflipper/{instance.id}.{ext}"
+    name, _, ext = filename.rpartition(".")
+    return f"coinflipper/{name}_{instance.id}.{ext}"
 
 
 class CoinFlip(models.Model):
