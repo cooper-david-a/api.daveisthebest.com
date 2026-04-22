@@ -4,9 +4,10 @@ from .models import CoinFlip
 
 @admin.register(CoinFlip)
 class FlipAdmin(admin.ModelAdmin):
-    list_display = ["id", "flipped_at", "result"]
+    list_display = ["id", "flipped_at", "result", "image_preview"]
     list_editable = ["result"]
     readonly_fields = ["image_preview"]
+    fields = ["result", "flipped_at", "image", "image_preview"]
     list_per_page = 25
 
     def image_preview(self, obj):
