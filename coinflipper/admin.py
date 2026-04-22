@@ -8,7 +8,7 @@ class FlipAdmin(admin.ModelAdmin):
     list_editable = ["result"]
     readonly_fields = ["image_preview"]
     fields = ["result", "flipped_at", "image", "image_preview"]
-    list_per_page = 25
+    list_per_page = 200
 
     def image_preview(self, obj):
         if obj.image:
