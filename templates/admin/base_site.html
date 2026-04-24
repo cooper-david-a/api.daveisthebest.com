@@ -6,3 +6,36 @@
     .paginator .this-page { vertical-align: middle; }
 </style>
 {% endblock %}
+
+{% block footer %}
+{{ block.super }}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const paginator = document.querySelector(".paginator ul");
+    if (!paginator) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const current = parseInt(params.get("p") || "1");
+
+    const links = paginator.querySelectorAll("a[href]");
+    const pages = Array.from(links)
+        .map(a => parseInt(new URLSearchParams(a.href.split("?")[1]).get("p")))
+        .filter(n => !isNaN(n));
+    const max = pages.length ? Math.max(...pages) : null;
+
+    function makeLink(p, label) {
+        const a = document.createElement("a");
+        params.set("p", p);
+        a.href = "?" + params.toString();
+        a.role = "button";
+        a.textContent = label;
+        const li = document.createElement("li");
+        li.appendChild(a);
+        return li;
+    }
+
+    if (current > 1) paginator.prepend(makeLink(current - 1, "‹ Prev"));
+    if (max && current < max) paginator.append(makeLink(current + 1, "Next ›"));
+});
+</script>
+{% endblock %}
