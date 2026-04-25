@@ -5,7 +5,7 @@ from .models import CoinFlip
 @admin.register(CoinFlip)
 class FlipAdmin(admin.ModelAdmin):
     list_display = ["id", "flipped_at", "recorded_at", "result", "image_preview"]
-    list_filter = ["id", "result", "flipped_at", "recorded_at"]
+    list_filter = ["result", "flipped_at", "recorded_at"]
     list_editable = ["result"]
     readonly_fields = ["image_preview"]
     fields = ["result", "flipped_at", "image", "image_preview"]
