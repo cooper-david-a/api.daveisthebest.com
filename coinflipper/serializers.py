@@ -1,6 +1,8 @@
 from django.db import transaction
 from django.contrib.admin.models import LogEntry, CHANGE
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import IntegerField, Max
+from django.db.models.functions import Cast
 from rest_framework import serializers
 from .models import CoinFlip, CoinFlipStats
 
@@ -53,5 +55,7 @@ class CoinFlipStatsSerializer(serializers.ModelSerializer):
         return round(self.get_manual_corrections(obj) / obj.total, 4) if obj.total else 0
 
     def get_last_corrected_id(self, obj):
-        last = self._get_correction_logs().order_by('-object_id').values_list('object_id', flat=True).first()
-        return int(last) if last else None
+        result = self._get_correction_logs().aggregate(
+            max_id=Max(Cast('object_id', IntegerField()))
+        )
+        return result['max_id']
