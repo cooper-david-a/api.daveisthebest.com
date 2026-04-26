@@ -3,7 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from .permissions import IsAdminOrReadOnly
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from .serializers import CoinFlipSerializer, CoinFlipStatsSerializer
 from .models import CoinFlip, CoinFlipStats
 from .filters import CoinFlipFilter
@@ -29,7 +29,7 @@ class CoinFlipperViewSet(ModelViewSet):
     """
     queryset = CoinFlip.objects.all()
     serializer_class = CoinFlipSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     filterset_class = CoinFlipFilter
     ordering_fields = ['id','flipped_at','recorded_at']
     ordering = ['-id']
@@ -92,7 +92,7 @@ class CoinFlipperViewSet(ModelViewSet):
         return Response(list(results))
 
 class CoinFlipperBulkView(APIView):
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
 
     def post(self, request):
         serializer = CoinFlipSerializer(data=request.data, many=True)
