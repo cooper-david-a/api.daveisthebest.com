@@ -15,6 +15,7 @@ class CoinFlip(models.Model):
     flipped_at = models.DateTimeField(default=timezone.now)
     result = models.CharField(choices=result_choices, max_length=1, default="U")
     image = models.ImageField(upload_to=_flip_image_path, blank=True, null=True)
+    checked = models.BooleanField(default=False)
 
 class CoinFlipStats(models.Model):
     total = models.IntegerField(default=0)
