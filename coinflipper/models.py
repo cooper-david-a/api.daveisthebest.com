@@ -16,6 +16,16 @@ class CoinFlip(models.Model):
     result = models.CharField(choices=result_choices, max_length=1, default="U")
     image = models.ImageField(upload_to=_flip_image_path, blank=True, null=True)
     checked = models.BooleanField(default=False)
+    coin = models.IntegerField()
+
+class ActiveCoin(models.Model):
+    number = models.IntegerField(default=1)
+
+    @classmethod
+    def get(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
 
 class CoinFlipStats(models.Model):
     total = models.IntegerField(default=0)

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from .serializers import CoinFlipSerializer, CoinFlipStatsSerializer
-from .models import CoinFlip, CoinFlipStats
+from .models import CoinFlip, CoinFlipStats, ActiveCoin
 from .filters import CoinFlipFilter
 
 
@@ -37,7 +37,7 @@ class CoinFlipperViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         image = self.request.FILES.get('image')
-        instance = serializer.save(image=None)
+        instance = serializer.save(image=None, coin=ActiveCoin.get().number)
         if image:
             instance.image = image
             instance.save(update_fields=['image'])
