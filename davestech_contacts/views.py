@@ -22,7 +22,7 @@ class ContactViewSet(ModelViewSet):
             message = request.data['message']
             send_mail(subject, message, email_from, email_to, fail_silently=False)
         except Exception as e:
-            logger.debug(type(e))
-            logger.debug(e)            
+            logger.error(type(e))
+            logger.error(e)
 
         return super().create(request, *args, **kwargs)
